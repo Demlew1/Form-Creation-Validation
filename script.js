@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Select the form and feedback division
+  console.log("DOM fully loaded and parsed");
+
   const form = document.getElementById("registration-form");
+  if (!form) {
+    console.error('Form with id="registration-form" not found!');
+    return;
+  }
+
   const feedbackDiv = document.getElementById("form-feedback");
+  if (!feedbackDiv) {
+    console.error('Feedback div with id="form-feedback" not found!');
+    return;
+  }
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -18,9 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
       messages.push("Username must be at least 3 characters long.");
     }
 
-    if (!email.includes("@") || !email.includes(".")) {
+    if (
+      !email.includes("@") ||
+      !email.includes(".") ||
+      email.indexOf("@") > email.lastIndexOf(".")
+    ) {
       isValid = false;
-      messages.push('Email must include "@" and "." characters.');
+      messages.push(
+        'Email must include "@" and "." characters in the correct format.'
+      );
     }
 
     if (password.length < 8) {
