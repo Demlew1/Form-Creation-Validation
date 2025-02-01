@@ -1,42 +1,26 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded and parsed");
-
+document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("registration-form");
-  if (!form) {
-    console.error('Form with id="registration-form" not found!');
-    return;
-  }
-
   const feedbackDiv = document.getElementById("form-feedback");
-  if (!feedbackDiv) {
-    console.error('Feedback div with id="form-feedback" not found!');
-    return;
-  }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent form submission
 
+    // Retrieve and trim user inputs
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
     let isValid = true;
-    const messages = [];
+    let messages = [];
 
     if (username.length < 3) {
       isValid = false;
       messages.push("Username must be at least 3 characters long.");
     }
 
-    if (
-      !email.includes("@") ||
-      !email.includes(".") ||
-      email.indexOf("@") > email.lastIndexOf(".")
-    ) {
+    if (!email.includes("@") || !email.includes(".")) {
       isValid = false;
-      messages.push(
-        'Email must include "@" and "." characters in the correct format.'
-      );
+      messages.push("Email must be a valid address containing '@' and '.'.");
     }
 
     if (password.length < 8) {
@@ -44,14 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
       messages.push("Password must be at least 8 characters long.");
     }
 
-    feedbackDiv.style.display = "block"; // Make feedbackDiv visible
-
+    feedbackDiv.style.display = "block";
     if (isValid) {
       feedbackDiv.textContent = "Registration successful!";
-      feedbackDiv.style.color = "#28a745"; // Green color for success
+      feedbackDiv.style.color = "#28a745";
     } else {
-      feedbackDiv.innerHTML = messages.join("<br>"); // Join messages with line breaks
-      feedbackDiv.style.color = "#dc3545"; // Red color for errors
+      feedbackDiv.innerHTML = messages.join("<br>");
+      feedbackDiv.style.color = "#dc3545";
     }
   });
 });
